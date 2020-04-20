@@ -1,11 +1,7 @@
 array = [0]
-first = 0
-second = 1
-fibonacci = 0
-    until fibonacci > 88 
-      fibonacci = first + second
-      first = second
-      second = fibonacci
-      array.push fibonacci
+dig = 1
+    until dig > 100 
+      array.push dig
+      dig = array[-1] + array[-2]
     end
 print array
