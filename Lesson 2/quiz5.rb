@@ -9,7 +9,6 @@ def leap(year)
       false
     end
 end  
-
 puts "Please write day"
 d = gets.chomp.to_i
 puts "Please write month"

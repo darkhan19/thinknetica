@@ -13,6 +13,6 @@ def days
         nov: 30,
         dec: 31
     }
-    months = year.select { |m,d| d == 30 }
+    months = year.select { |m, d| d == 30 }
     puts months
 end
