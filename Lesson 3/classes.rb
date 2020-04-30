@@ -37,14 +37,15 @@ class Route
     def add_midway(name)
       @stations.insert(-2, name)    
     end
+
     def del_route(name)
       @stations.delete(name)
     end
+
     def show_route
       @stations.each { |station| puts station.name }    
     end
-
-  end
+end
 
 class Train
   attr_reader  :type, :number, :railcars, :current_station, :current_route, :speed
@@ -55,6 +56,7 @@ class Train
     @speed = 0
     @current_route = []
     @current_station = []
+  end
 
   def speed_up(number)
     @speed += number 
@@ -75,13 +77,11 @@ class Train
   def unhook_railcars(number)
     if @speed > 0
       puts "U can't do that while moving"
-    elsif
-      @railcars == 0 
+    elsif @railcars == 0 
       puts "no railcars"
-    elsif 
-      @railcars < number 
+    elsif @railcars < number 
       puts "u cant do that"
-    else    
+    else 
       @railcars -= number
     end
   end
@@ -103,8 +103,17 @@ class Train
     end
   end  
 
+  def frist_station?
+    @current_station == @current_route.stations.first
+  end
+
+  def previous_station?
+    @current_station == @current_route.stations.last
+  end
+
+
   def previous_station
-    if @current_station == @current_route.stations.first
+    if self.frist_station?
       puts "вы на начальной станции"
     else 
       count = @current_route.stations.index(@current_station) - 1
@@ -115,7 +124,7 @@ class Train
   end
 
   def show_stations
-    if @current_station == @current_route.stations.first
+    if self.frist_station?
       puts "Вы на начальной станции #{@current_station.name}, следующая станция #{@current_route.stations[1].name}"
 
     elsif @current_station == @current_route.stations.last
