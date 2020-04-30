@@ -1,5 +1,6 @@
 class Station
   attr_reader :trains, :name
+
   def initialize(name)
     @name = name
     @trains = []    
@@ -28,27 +29,28 @@ end
 
 
 class Route
-    attr_reader :stations
+  attr_reader :stations
     
-    def initialize(from, to)
-      @stations = [from, to]
-    end
+  def initialize(from, to)
+    @stations = [from, to]
+  end
     
-    def add_midway(name)
-      @stations.insert(-2, name)    
-    end
+  def add_midway(name)
+    @stations.insert(-2, name)    
+  end
 
-    def del_route(name)
-      @stations.delete(name)
-    end
+  def del_route(name)
+    @stations.delete(name)
+  end
 
-    def show_route
-      @stations.each { |station| puts station.name }    
-    end
+  def show_route
+    @stations.each { |station| puts station.name }    
+  end
 end
 
 class Train
   attr_reader  :type, :number, :railcars, :current_station, :current_route, :speed
+  
   def initialize(number, type, railcars) 
     @number = number
     @type = type
