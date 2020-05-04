@@ -5,4 +5,3 @@ class CargoWagon < Wagon
     @count = count
   end
 end
-  

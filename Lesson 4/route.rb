@@ -15,7 +15,7 @@ class Route
   end
 
   def first?
-    self.stations == stations.frist
+    self.stations == stations.first?
   end
 
   def del_route(name)

@@ -9,11 +9,11 @@ class Train
   end
 
   def passanger?
-    self.class == PassangerTrain
+    self.is_a? PassangerTrain
   end
 
   def cargo?
-    self.class == CargoTrain
+    self.is_a? CargoTrain
   end
 
 def current_station
@@ -41,7 +41,7 @@ end
   end  
 
   def previous_station
-    if self.frist_station?
+    if self.first_station?
       puts "вы на начальной станции"
     else 
       count = @current_route.stations.index(@current_station) - 1
@@ -52,7 +52,7 @@ end
   end
 
   def show_stations
-    if self.frist_station?
+    if self.first_station?
       puts "Вы на начальной станции #{@current_station.name}, следующая станция #{@current_route.stations[1].name}"
 
     elsif @current_station == @current_route.stations.last
@@ -64,8 +64,10 @@ end
       puts "Вы на станции #{@current_station.name}, предыдущая станция #{@current_route.stations[backward].name}, следующая станция #{@current_route.stations[forward].name}"    
     end
   end
-private #только внутри класса
-  def frist_station?
+
+  private #только внутри класса
+
+  def first_station?
     @current_station == @current_route.stations.first
   end
 
