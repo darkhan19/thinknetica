@@ -5,6 +5,7 @@ class Route
   def initialize(from, to, name)
     @stations = [from, to]
     @name = name
+    register_instance
   end
     
   def add_midway(name)

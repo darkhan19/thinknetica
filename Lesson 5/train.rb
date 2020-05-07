@@ -9,6 +9,7 @@ class Train
     @current_route = []
     @current_station = []
     @@list << self
+    register_instance
   end
 
   def self.find(n)
