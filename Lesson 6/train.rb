@@ -4,19 +4,20 @@ class Train
 
   REGEXP = /^[a-z]{3}[0-9]{2}$/i
   
-  @@list = []
+  @@list = {}
+
   def initialize(number) 
     @number = number
     validate!
     @wagons = []
     @current_route = []
     @current_station = []
-    @@list << self
+    @@list[number] = self
     register_instance
   end
 
-  def self.find(n)
-    @@list.find { |x| x.number == n}
+  def self.find(number)
+    @@list[number]
   end
     
   def passanger?
@@ -42,39 +43,17 @@ class Train
   end
 
   def next_station
-    if self.last_station?
-      puts "вы на конечной станции"
-    else 
       count = @current_route.stations.index(@current_station) + 1
       @current_station.send_train(self)
       @current_station = @current_route.stations[count]
       @current_station.add_train(self)
-    end
   end  
 
   def previous_station
-    if self.first_station?
-      puts "вы на начальной станции"
-    else 
       count = @current_route.stations.index(@current_station) - 1
       @current_station.send_train(self)
       @current_station = @current_route.stations[count]
       @current_station.add_train(self) 
-    end
-  end
-
-  def show_stations
-    if self.first_station?
-      puts "Вы на начальной станции #{@current_station.name}, следующая станция #{@current_route.stations[1].name}"
-
-    elsif self.last_station?
-      count = @current_route.stations.index(@current_station) - 1
-      puts "Вы на конечной станции #{@current_station.name}, предыдущая станция #{@current_route.stations[count].name}"
-    else
-      forward = @current_route.stations.index(@current_station) + 1
-      backward = @current_route.stations.index(@current_station) - 1
-      puts "Вы на станции #{@current_station.name}, предыдущая станция #{@current_route.stations[backward].name}, следующая станция #{@current_route.stations[forward].name}"    
-    end
   end
 
   def valid?
@@ -84,20 +63,17 @@ class Train
     false
   end
 
-  protected
-
-  def validate!
-    raise "Неверный формат!" if number !~ REGEXP
-  end
-    
-
-  private 
-
   def first_station?
     @current_station == @current_route.stations.first
   end
 
   def last_station?
     @current_station == @current_route.stations.last
+  end
+
+  protected
+
+  def validate!
+    raise "Неверный формат!" if number !~ REGEXP
   end
 end

@@ -264,14 +264,24 @@ def menu7_1
   puts "выбери поезд"
   trains_list
   tr = gets.chomp.to_i
-  @trains[tr].next_station
+  if @trains[tr].last_station?
+    puts "вы на конечной станции"
+  else
+    @trains[tr].next_station
+    puts "Поезд №#{@trains[tr].number} на станции #{@trains[tr].current_station.name}"
+  end
 end
 
 def menu7_2
   puts "выбери поезд"
   trains_list
   tr = gets.chomp.to_i
-  @trains[tr].previous_station
+  if @trains[tr].frist_station?
+    puts "вы на начальной станции"
+  else
+    @trains[tr].previus_station
+    puts "Поезд №#{@trains[tr].number} на станции #{@trains[tr].current_station.name}"
+  end
 end
 
 def menu8
