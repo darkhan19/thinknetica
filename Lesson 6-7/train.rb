@@ -20,7 +20,7 @@ class Train
     @@list[number]
   end
 
-  def wagons_block
+  def wagons_each
     @wagons.each { |wagon| yield(wagon)}
   end
 

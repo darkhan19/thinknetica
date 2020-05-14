@@ -332,9 +332,9 @@ end
 def menu9
   @stations.each do |station|
     puts "Поезда на станции #{station.name}:"
-    station.trains_block do |train|
+    station.trains_each do |train|
       puts "Поезд номер #{train.number}, тип: #{train.type},  кол-во вагонов: #{train.wagons.size}"
-      train.wagons_block do |wagon|
+      train.wagons_each do |wagon|
         if wagon.is_a? PassangerWagon
         puts "Вагоны: №#{wagon.number}, тип: #{wagon.type}, кол-во свободных мест: #{wagon.free_seats}, кол-во занятых мест #{wagon.used_seats}"
         else
