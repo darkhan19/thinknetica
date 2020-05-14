@@ -1,24 +1,11 @@
 class PassangerWagon < Wagon
-  attr_accessor :seats, :used_seats
+  attr_accessor :size, :used
   attr_reader :number, :type
 
-  def initialize(seats)
-    @seats = seats
+  def initialize(size)
     @number = rand(1..1000) 
-    @used_seats = 0
+    @size = size
     @type = "Пассажирский"
-  end
-
-  def free_seats
-    @seats - @used_seats
-  end
-
-  def used_seats
-    @used_seats
-  end
-
-  def add_passanger
-  raise 'Мест нет!' if free_seats == 0
-  @used_seats +=1
+    @used = 0
   end
 end

@@ -8,6 +8,10 @@ class Wagon
     @number = rand(1..1000)
     @used = 0
   end 
+
+  def free_space
+    @size - @used
+  end
   
   def cargo?
     self.class == CargoWagon 
@@ -15,6 +19,12 @@ class Wagon
 
   def passanger?
     self.class == PassangerWagon 
+  end
+
+  def add_size(n=1)
+    raise 'Места нет!' if free_space == 0
+    raise 'Столько места нет!' if free_space < n
+    @used += n
   end
 end
 

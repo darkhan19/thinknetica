@@ -320,7 +320,7 @@ def menu8
     puts 'это пассажирский поезд, теперь выбери у него вагон который хочешь использовать?'
     wagons_list(tr)
     wg = gets.chomp.to_i
-    @trains[tr].wagons[wg].add_passanger
+    @trains[tr].wagons[wg].add_size
     puts 'Успешно сел 1 человек.'
   rescue => e
     puts e.message
@@ -336,9 +336,9 @@ def menu9
       puts "Поезд номер #{train.number}, тип: #{train.type},  кол-во вагонов: #{train.wagons.size}"
       train.wagons_each do |wagon|
         if wagon.is_a? PassangerWagon
-        puts "Вагоны: №#{wagon.number}, тип: #{wagon.type}, кол-во свободных мест: #{wagon.free_seats}, кол-во занятых мест #{wagon.used_seats}"
+        puts "Вагоны: №#{wagon.number}, тип: #{wagon.type}, кол-во свободных мест: #{wagon.free_space}, кол-во занятых мест #{wagon.used}"
         else
-        puts "Вагоны: №#{wagon.number}, тип: #{wagon.type}, кол-во свободного места: #{wagon.free_space}, кол-во занятых мест #{wagon.used_size}"
+        puts "Вагоны: №#{wagon.number}, тип: #{wagon.type}, кол-во свободного места: #{wagon.free_space}, кол-во занятых мест #{wagon.used}"
         end
       end
     end
