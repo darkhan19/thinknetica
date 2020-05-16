@@ -33,9 +33,7 @@ class Route
   end
 
   def del_station(index)
-    if stations[index] == stations.first
-      raise 'Нельзя удалить начальную станцию'
-    end
+    raise 'Нельзя удалить начальную станцию' if stations[index] == stations.first
     raise 'Нельзя удалить конечную станцию' if stations[index] == stations.last
 
     @routes[route].stations.delete_at(station)
