@@ -1,22 +1,25 @@
 # frozen_string_literal: true
-
+require_relative './modules/accessor.rb'
+require_relative './modules/company.rb'
+require_relative './modules/instance_counter.rb'
+require_relative './modules/company.rb'
 class Train
-  include InstanceCounter
-  include Company
+  include InstanceCounter, Company, Validation 
   attr_reader :number, :wagons, :current_station, :current_route, :speed
 
   REGEXP = /^[a-z]{3}[0-9]{2}$/i.freeze
-
+  validate :number, :fromat, REGEXP
   @@trains_list = {}
+  
 
   def initialize(number)
     @number = number
-    validate!
     @wagons = []
     @current_route = []
     @current_station = []
     @@trains_list[number] = self
     register_instance
+    validate!
   end
 
   def self.find(number)
@@ -63,24 +66,11 @@ class Train
     @current_station.add_train(self)
   end
 
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
   def first_station?
     @current_station == @current_route.stations.first
   end
 
   def last_station?
     @current_station == @current_route.stations.last
-  end
-
-  protected
-
-  def validate!
-    raise 'Неверный формат!' if number !~ REGEXP
   end
 end

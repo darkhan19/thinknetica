@@ -12,12 +12,12 @@ module Accessor
         instance_variable_get("@#{name}_history")
       end
 
-      define_method("#{name}=") do |new_value|
-        value = instance_variable_get("@#{name}_history")
-        value ||= []
-        value << new_value
+      define_method("#{name}=") do |value|
+        history = instance_variable_get("@#{name}_history")
+        history ||= []
+        history << value
         instance_variable_set("@#{name}_history", value)
-        instance_variable_set(var_name, new_value)
+        instance_variable_set(var_name, value)
       end
     end
   end
@@ -33,7 +33,7 @@ module StrongAttrAccessor
     define_method("#{name}=") do |value|
       raise 'Класс  не совпадает' unless value.is_a?(class_name)
 
-      instance_variable_set("@#{name}", value)
+      instance_variable_set(var_name, value)
     end
   end
 end

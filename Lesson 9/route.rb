@@ -1,17 +1,23 @@
 # frozen_string_literal: true
+require_relative './modules/accessor.rb'
+require_relative './modules/instance_counter.rb'
+require_relative './modules/validation.rb'
 
 class Route
-  include InstanceCounter
-  attr_reader :name
+  include InstanceCounter, Accessor, Validation
+  attr_reader :name, :from, :to
   attr_accessor :stations
 
   REGEXP = /[a-z]/i.freeze
+  validate :from, :format, REGEXP
+  validate :to, :format, REGEXP
+  validate :name, :format, REGEXP
 
   def initialize(from, to, name)
     @stations = [from, to]
     @name = name
-    validate!
     register_instance
+    validate!
   end
 
   def add_midway(name)
@@ -39,11 +45,5 @@ class Route
     raise 'Нельзя удалить конечную станцию' if stations[index] == stations.last
 
     @routes[route].stations.delete_at(station)
-  end
-
-  protected
-
-  def validate!
-    raise 'Неверный формат! Только латинские буквы!' if name !~ REGEXP
   end
 end

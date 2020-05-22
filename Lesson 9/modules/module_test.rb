@@ -11,7 +11,7 @@ class Test
   @number = 123
   @station = "kirov"
   @wagon = 32
-  @train = ' '
+  @train = '2'
   end
 
   validate :station, :format, /[a-z]/

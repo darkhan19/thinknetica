@@ -1,20 +1,24 @@
 # frozen_string_literal: true
+require_relative './modules/accessor.rb'
+require_relative './modules/instance_counter.rb'
+require_relative './modules/validation.rb'
 
 class Station
-  include InstanceCounter
+  include InstanceCounter, Accessor, Validation
   attr_reader :name
   attr_accessor :trains
 
   REGEXP = /[a-z]/i.freeze
+  validate :name, :format, REGEXP
 
   @@stations_list = []
 
   def initialize(name)
     @name = name
     @trains = []
-    validate!
     @@stations_list << self
     register_instance
+    validate!
   end
 
   def trains_each
@@ -25,24 +29,11 @@ class Station
     @@stations_list
   end
 
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
   def add_train(train)
     @trains << train
   end
 
   def send_train(train)
     @trains.delete(train)
-  end
-
-  private
-
-  def validate!
-    raise 'Только латинские буквы!' if name !~ REGEXP
   end
 end

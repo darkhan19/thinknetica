@@ -1,15 +1,20 @@
 # frozen_string_literal: true
+require_relative './modules/accessor.rb'
+require_relative './modules/company.rb'
+require_relative './modules/instance_counter.rb'
+require_relative './modules/validation.rb'
 
 class Wagon
-  include InstanceCounter
-  include Company
+  include InstanceCounter, Company, Accessor, Validation
   attr_accessor :size, :used
   attr_reader :number
+  validate :size, :type, Integer
 
   def initialize(size)
     @size = size
     @number = rand(1..1000)
     @used = 0
+    validate!
   end
 
   def free_space

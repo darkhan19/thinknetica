@@ -8,22 +8,21 @@ module Validation
 
   module ClassMethods
     attr_reader :validates
-    def validate(name, *args)
+    def validate(name, type, *arg)
       @validates ||= []
-      @validates << { name => args }
+      @validates << { name: name, type: type, arg: arg }
      end
   end
 
   module InstanceMethods
     def validate!
       self.class.validates.each do |val|
-        val.each do |name, args|
-          name = instance_variable_get("@#{name}")
-          send("validate_#{args[0]}".to_sym, name, *args[1])
+          name = instance_variable_get("@#{val[:name]}")
+          send("validate_#{val[:type]}".to_sym, name, *val[:arg])
         end
       end
-    end
   end
+  
 
   def valid?
     validate!
@@ -32,6 +31,8 @@ module Validation
     false
   end
 
+  private
+  
   def validate_presence(name)
     raise 'Название не может быть пустым' if name.nil? || name.strip.empty?
   end
